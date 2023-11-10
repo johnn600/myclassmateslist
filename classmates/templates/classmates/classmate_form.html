@@ -82,106 +82,78 @@
 
   </style>
 
+  
+<script>
+  function validateForm() {
+    // Input fields id
+    var input_firstname = document.getElementById('id_firstname');
+    var input_lastname = document.getElementById('id_lastname');
+    var input_age = document.getElementById('id_age');
+    var input_address = document.getElementById('id_address');
+
+    // Define regular expressions for each field
+    var nameRegex = /^[A-Za-z\s\-,.']+$/; // Allow letters, spaces, hyphens, commas, periods, and single quotes
+    var ageRegex = /^\d+$/; // Only digits
+    var addressRegex = /^[A-Za-z0-9\s\-,.']+$/; // Allow letters, digits, spaces, hyphens, commas, periods, and single quotes
+
+    // Styling for invalid input
+    function setInvalidInput(input) {
+      input.style.borderColor = "red";
+    }
+
+    // Reset input styling
+    function resetInputStyle(input) {
+      input.style.borderColor = "#ced4da";
+    }
+
+    // First name
+    if (!nameRegex.test(input_firstname.value)) {
+      setInvalidInput(input_firstname);
+      return false;
+    } else {
+      resetInputStyle(input_firstname);
+    }
+
+    // Last name
+    if (!nameRegex.test(input_lastname.value)) {
+      setInvalidInput(input_lastname);
+      return false;
+    } else {
+      resetInputStyle(input_lastname);
+    }
+
+    // Age
+    if (!ageRegex.test(input_age.value) || parseInt(input_age.value) <= 0 || parseInt(input_age.value) >= 150) {
+      setInvalidInput(input_age);
+      return false;
+    } else {
+      resetInputStyle(input_age);
+    }
+
+    // Address
+    if (!addressRegex.test(input_address.value)) {
+      setInvalidInput(input_address);
+      return false;
+    } else {
+      resetInputStyle(input_address);
+    }
+
+    // Form is valid, continue with submission
+    return true;
+  }
+</script>
+
+
 </head>
 
 <body>
   <h1>Edit Classmate Information</h1>
 
-  <form method="post" onsubmit="return validateForm();">
+  <form method="post" onsubmit="return validateForm()">
     {% csrf_token %}
-  
-    <div class="form-group">
-      <label for="firstname">First name:</label>
-      <input type="text" name="firstname" maxlength="200" required="" id="firstname">
-    </div>
-  
-    <div class="form-group">
-      <label for="lastname">Last name:</label>
-      <input type="text" name="lastname" maxlength="200" required="" id="lastname">
-    </div>
-  
-    <div class="form-group">
-      <label for="age">Age:</label>
-      <input type="number" name="age" required="" id="age">
-    </div>
-  
-    <div class="form-group">
-      <label for="address">Address:</label>
-      <input type="text" name="address" maxlength="300" required="" id="address">
-    </div>
-  
-    <div class="form-group">
-      <label for="gender">Gender:</label>
-      <select name="gender" id="gender" required>
-        <option value="" hidden>Select</option>
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
-        <option value="Decline to state">Decline to state</option>
-      </select>
-    </div>
-  
-    <div style="text-align: center; margin-top: 10px; margin-bottom: 10px;">
-      <input type="submit" value="Submit">
-    </div>
+    {{ form.as_p }}
+    <input type="submit" value="Submit">
   </form>
   
-  <script>
-  function validateForm() {
-    //input fields id
-    var input_firstname = document.getElementById('firstname');
-    var input_lastname = document.getElementById('lastname');
-    var input_age = document.getElementById('age');
-    var input_address = document.getElementById('address');
-
-    // Define regular expressions for each field
-    var nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
-    var ageRegex = /^\d+$/; // Only digits
-    var addressRegex = /[A-Za-z0-9'\.\-\s\,]/; // Letters, digits, spaces, and common punctuation
-
-    //styling for invalid input
-    if (!nameRegex.test(input_firstname.value)) {
-      input_firstname.style.borderColor = "red";
-      return false;
-    }
-    else {
-      input_firstname.style.borderColor = "#ced4da";
-    }
-
-    //last name
-    if (!nameRegex.test(input_lastname.value)) {
-      input_lastname.style.borderColor = "red";
-      return false;
-    }
-    else {
-      input_lastname.style.borderColor = "#ced4da";
-    }
-
-    //age
-    if (!ageRegex.test(input_age.value) || parseInt(input_age.value) < 0 || parseInt(input_age.value) > 150) {
-      input_age.style.borderColor = "red";
-      return false;
-    }
-    else {
-      input_age.style.borderColor = "#ced4da";
-    }
-
-    console.log(input_address.value);
-    console.log(addressRegex.test(input_address.value));
-
-    //address
-    if (!addressRegex.test(input_address.value)) {
-      input_address.style.borderColor = "red";
-      return false;
-    }
-    else {
-      input_address.style.borderColor = "#ced4da";
-    }
-
-    // Form is valid, continue with submission
-    return true;
-
-  }
-  </script>
 </body>
 </html>
