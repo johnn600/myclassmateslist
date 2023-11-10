@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classmate List</title>
+
+    <style>
+        /* modern font for body */
+        body {
+        font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        padding: 0 10%;
+        }
+
+        table {
+        width: 100%;
+        border-collapse: collapse;
+        }
+
+        th, td {
+        padding: 0.5rem;
+        text-align: left;
+        }
+
+        th {
+        background-color: #f2f2f2;
+        text-align: center;
+        }
+
+        tr:nth-child(even) {
+        background-color: #eee;
+        }
+
+        a {
+        text-decoration: none;
+        color: #007bff;
+        }
+
+        /* new button */
+        .new {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 0.25rem;
+        margin-top: 10px;
+        transition: all 0.2s ease-in-out;
+        }
+
+        .new:hover {
+        background-color: #0069d9;
+        }
+
+        .actions-column {
+            text-align: center;
+            border-left: none;
+            border-right: none;
+            background-color: #f2f2f2;
+        }
+    </style>
+
+    <!-- import fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+</head>
+
+<body>
+    <h1>CLASSMATES</h1>
+
+    <table border="1">
+    <thead>
+        <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Age</th>
+        <th>Address</th>
+        <th>Gender</th>
+        <th colspan="3">Actions</th>
+        </tr>
+    </thead>
+<tbody>
+      {% if object_list %}
+        {% for classmate in object_list %}
+          <tr>
+            <td>{{ classmate.firstname }}</td>
+            <td>{{ classmate.lastname }}</td>
+            <td>{{ classmate.age }}</td>
+            <td>{{ classmate.address }}</td>
+            <td>{{ classmate.gender }}</td>
+            <td class="actions-column"><a class="actions" href="{% url "classmate_view" classmate.id %}">
+                <i class="fa-regular fa-user" style="color: #007bff;"></i>
+              </a></td>
+            <td class="actions-column"><a class="actions" href="{% url "classmate_edit" classmate.id %}">
+                <i class="fa-regular fa-pen-to-square" style="color: #007bff;"></i>
+              </a></td>
+            <td class="actions-column"><a class="actions" href="{% url "classmate_delete" classmate.id %}">
+                <i class="fa-regular fa-trash-can" style="color: #ff0000;"></i>
+              </a></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="6" style="text-align: center">No data found</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+  <a class="new" href="{% url "classmate_new" %}">Add new classmate</a>
+</body>
+</html>
